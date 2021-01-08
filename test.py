@@ -25,13 +25,13 @@ from naoqi import ALModule
 from naoqi import ALBroker
 
 
-# Sample Animations
 import animations.winner2_pose
 import animations.disappointed_pose
 
 import OneHandUp
 import TwoHandsUp
 import HelloBye
+import Cheat
 
 
 def Execute_Animation(pose, factorSpeed = 1.0):
@@ -56,7 +56,7 @@ def main():
     rospy.init_node('animation_execution_sample')
 
 	# change IP and Port accordingly
-    nao_IP = '192.168.0.100'
+    nao_IP = '192.168.0.101'
     nao_PORT = 9559
 
     myBroker = ALBroker("myBroker",        
@@ -72,7 +72,7 @@ def main():
 	
     postureProxy.goToPosture("StandInit", 0.5)
     
-    Execute_Animation(HelloBye, 0.5)
+    Execute_Animation(animations.disappointed_pose, 0.6)
     #postureProxy.goToPosture("StandInit", 0.5)
 	
 
