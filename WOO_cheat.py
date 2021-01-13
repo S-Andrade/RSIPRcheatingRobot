@@ -88,10 +88,10 @@ def main():
 
 	knows = raw_input("y - Knows the game \nn - Doesn't know the game\n->")
 	if knows == 'y':
-		tts.say("If you already know the rules of the game, I just need to explain how we are going to play.  \\pau=1000\\ Instead of using the ten fingers we are going to use our two arms. That is, our answers can be one or two arms!")
+		tts.say("If you already know the rules of the game, I just need to explain how we are going to play.  \\pau=1000\\ Instead of using the ten fingers I am going to use my two arms and you are going to say your bet out loud, one or two.")
 			
 	if knows == 'n':
-		tts.say("This game is simple.\\pau=1000\\ At the beginning of each game,\\pau=100\\ each of us bets on whether the number to come out is Even \\pau=100 \\or \\pau=100\\ Odd, \\pau=100\\ and the bets must be different. \\pau=1000\\ Then each of us chooses a number between 1 and 2.\\pau=1000\\ For this,\\pau=100\\ we raise the number of arms we want.\\pau=1000\\  In the end,\\pau=100\\ we add the two bets \\pau=100\\and if that sum is odd \\pau=100\\ who bet odd wins, \\pau=1000\\ if it is even \\pau=100\\ who wins is who chose even.")
+		tts.say("This game is simple.\\pau=1000\\ At the beginning of each game,\\pau=100\\ each of us bets on whether the number to come out is Even \\pau=100 \\or \\pau=100\\ Odd, \\pau=100\\ and the bets must be different. \\pau=1000\\ Then each of us chooses a number between 1 and 2.\\pau=1000\\ For this,\\pau=100\\ I raise the number of arms I want to bet and you say the bet out loud, one or two.\\pau=1000\\  In the end,\\pau=100\\ we add the two bets \\pau=100\\and if that sum is odd \\pau=100\\ who bet odd wins, \\pau=1000\\ if it is even \\pau=100\\ who wins is who chose even.")
 
 	tts.say("We will play three games. Whoever wins the most games, WINS!")
 	tts.say("Let's start!")
@@ -146,11 +146,11 @@ def main():
 			print("1 2 3")
 			
 			pos = raw_input("\n1 - One hand up \n2 - Two hands up \nCheating robot Answer->")
-			asr.subscribe(ip)
+			asr.subscribe(nao_IP)
 			memProxy = ALProxy("ALMemory", nao_IP, nao_PORT)
 			memProxy.subscribeToEvent('WordRecognized',nao_IP,'wordRecognized')
 			time.sleep(2)
-			asr.unsubscribe(ip)
+			asr.unsubscribe(nao_IP)
 			data=memProxy.getData("WordRecognized")
 			print( "data: %s" % data )
 
