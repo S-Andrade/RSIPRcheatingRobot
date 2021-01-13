@@ -72,6 +72,10 @@ def main():
 	postureProxy = ALProxy("ALRobotPosture", nao_IP, nao_PORT)
 	tts    = ALProxy("ALTextToSpeech", nao_IP, nao_PORT)
 	tts.setLanguage("English")
+	asr = ALProxy("ALSpeechRecognition", nao_IP, nao_PORT)
+	asr.setLanguage("English")
+	vocabulary = ["one", "two"]
+	asr.setVocabulary(vocabulary, False)
 	# Change the robot's posture to Crouch
 	postureProxy.goToPosture("Stand", 0.5)
 
@@ -142,6 +146,14 @@ def main():
 			print("1 2 3")
 			
 			pos = raw_input("\n1 - One hand up \n2 - Two hands up \nCheating robot Answer->")
+			asr.subscribe(ip)
+			memProxy = ALProxy("ALMemory", nao_IP, nao_PORT)
+			memProxy.subscribeToEvent('WordRecognized',nao_IP,'wordRecognized')
+			time.sleep(2)
+			asr.unsubscribe(ip)
+			data=memProxy.getData("WordRecognized")
+			print( "data: %s" % data )
+
 			if pos == '1':
 				Execute_Animation(OneHandUp, 0.4)
 			if pos == '2':
@@ -165,6 +177,14 @@ def main():
 			Execute_Animation(Cheat, 0.4)
 
 			pos = raw_input("\n1 - One hand up \n2 - Two hands up \nCheating robot Answer->")
+			asr.subscribe(ip)
+			memProxy = ALProxy("ALMemory", nao_IP, nao_PORT)
+			memProxy.subscribeToEvent('WordRecognized',nao_IP,'wordRecognized')
+			time.sleep(2)
+			asr.unsubscribe(ip)
+			data=memProxy.getData("WordRecognized")
+			print( "data: %s" % data )
+
 			if pos == '1':
 	   			Execute_Animation(OneHandUp, 0.4)
 			if pos == '2':

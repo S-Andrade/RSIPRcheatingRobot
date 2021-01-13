@@ -56,9 +56,14 @@ def changeSpeed(times, factor):
 def main():
 	rospy.init_node('animation_execution_sample')
 
+	data = []
+
 	# change IP and Port accordingly
-	nao_IP = '192.168.0.101'
-	nao_PORT = 9559
+	#nao_IP = '192.168.0.101'
+	#nao_PORT = 9559
+
+	nao_IP = '127.0.0.1'
+	nao_PORT = 36663
 
 	myBroker = ALBroker("myBroker",        
 		"0.0.0.0",   # listen to anyone
@@ -72,6 +77,10 @@ def main():
 	postureProxy = ALProxy("ALRobotPosture", nao_IP, nao_PORT)
 	tts    = ALProxy("ALTextToSpeech", nao_IP, nao_PORT)
 	tts.setLanguage("English")
+	asr = ALProxy("ALSpeechRecognition", nao_IP, nao_PORT)
+	asr.setLanguage("English")
+	vocabulary = ["one", "two"]
+	asr.setVocabulary(vocabulary, False)
 	# Change the robot's posture to Crouch
 	postureProxy.goToPosture("StandInit", 0.5)
 
@@ -138,6 +147,14 @@ def main():
 			tts.say("1 \\pau=1000\\ 2 \\pau=1000\\ 3")
 			print("1 2 3")
 			n = randint(0,1)
+			asr.subscribe(ip)
+			memProxy = ALProxy("ALMemory", nao_IP, nao_PORT)
+			memProxy.subscribeToEvent('WordRecognized',nao_IP,'wordRecognized')
+			time.sleep(2)
+			asr.unsubscribe(ip)
+			data=memProxy.getData("WordRecognized")
+			print( "data: %s" % data )
+
 			if n == 0:
 				Execute_Animation(OneHandUp, 0.4)
 			if n == 1:
